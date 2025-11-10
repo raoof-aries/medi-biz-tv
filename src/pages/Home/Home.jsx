@@ -5,7 +5,7 @@ const Home = () => {
     <div className="modern-wrapper">
       <HeroSection />
       <AboutSection />
-      <ContactSection />
+      {/* <ContactSection /> */}
     </div>
   );
 };

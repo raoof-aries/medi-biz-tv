@@ -3,7 +3,7 @@
   display: flex;
   align-items: center;
   padding: 2rem;
-  margin-top: 5rem;
+  margin-top: 3rem;
   background: #000;
   position: relative;
   overflow: hidden;
@@ -37,10 +37,11 @@
   z-index: 1;
 }
 
+/* You set this to 0.8fr | 1.2fr; slider lives in the wider column */
 .hero-content-wrapper {
   display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 4rem;
+  grid-template-columns: 0.9fr 1.1fr;
+  gap: 3rem;
   align-items: center;
 }
 
@@ -49,41 +50,7 @@
   display: flex;
   flex-direction: column;
   gap: 2rem;
-}
-
-.live-badge {
-  display: inline-flex;
-  align-items: center;
-  gap: 0.5rem;
-  padding: 0.5rem 1rem;
-  background: rgba(239, 68, 68, 0.1);
-  border: 1px solid rgba(239, 68, 68, 0.3);
-  border-radius: 6px;
-  color: #ef4444;
-  font-size: 0.75rem;
-  font-weight: 700;
-  letter-spacing: 1px;
-  width: fit-content;
-}
-
-.live-dot {
-  width: 8px;
-  height: 8px;
-  background: #ef4444;
-  border-radius: 50%;
-  animation: pulse 2s infinite;
-}
-
-@keyframes pulse {
-  0%,
-  100% {
-    opacity: 1;
-    box-shadow: 0 0 0 0 rgba(239, 68, 68, 0.7);
-  }
-  50% {
-    opacity: 0.7;
-    box-shadow: 0 0 0 6px rgba(239, 68, 68, 0);
-  }
+  justify-content: center;
 }
 
 .hero-title {
@@ -144,34 +111,16 @@
   border-color: rgba(255, 255, 255, 0.4);
 }
 
-.hero-stats-inline {
-  display: flex;
-  gap: 2rem;
-  padding-top: 2rem;
-  border-top: 1px solid rgba(255, 255, 255, 0.1);
-}
-
-.stat-inline {
-  display: flex;
-  flex-direction: column;
-  gap: 0.25rem;
-}
-
-.stat-number {
-  font-size: 1.75rem;
-  font-weight: 700;
-  color: #ef4444;
-}
-
-.stat-text {
-  font-size: 0.875rem;
-  color: rgba(255, 255, 255, 0.6);
-}
-
 /* Right Visual */
 .hero-visual {
   position: relative;
-  height: 500px;
+  height: 450px;
+  width: 100%;
+  /* allow the grid item to expand and shrink properly */
+  min-width: 0;
+  /* remove hard cap so the slider can take the full column width */
+  /* max-width: 550px;  <-- removed */
+  /* margin-left: auto;  <-- removed */
 }
 
 .video-card {
@@ -180,69 +129,138 @@
   border-radius: 16px;
   overflow: hidden;
   box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
+  position: relative;
 }
 
-.video-thumbnail {
+/* Banner Slider Styles */
+.banner-slider {
   width: 100%;
   height: 100%;
-  background: linear-gradient(
-      135deg,
-      rgba(239, 68, 68, 0.2),
-      rgba(14, 165, 233, 0.2)
-    ),
-    radial-gradient(circle at 50% 50%, rgba(255, 255, 255, 0.05), transparent),
-    #0a0a0a;
+  background: #0a0a0a;
+}
+
+.banner-slide {
+  width: 100%;
+  height: 100%;
   display: flex;
   align-items: center;
   justify-content: center;
   position: relative;
+  background: #0a0a0a;
+  opacity: 1 !important;
 }
 
-.play-circle {
-  width: 80px;
-  height: 80px;
-  background: #ef4444;
-  border-radius: 50%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  color: #fff;
-  cursor: pointer;
-  transition: all 0.3s ease;
-  position: relative;
-  z-index: 2;
+.swiper-slide {
+  opacity: 1 !important;
 }
 
-.play-circle:hover {
-  transform: scale(1.1);
-  background: #dc2626;
-}
-
-.video-overlay {
+.banner-slide::before {
+  content: "";
   position: absolute;
-  bottom: 1.5rem;
-  left: 1.5rem;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: radial-gradient(
+    circle at 50% 50%,
+    rgba(255, 255, 255, 0.05),
+    transparent
+  );
+  z-index: 1;
+}
+
+.banner-content {
+  position: relative;
   z-index: 2;
+  text-align: center;
+  padding: 2rem;
 }
 
-.viewer-count {
-  display: inline-flex;
-  align-items: center;
-  gap: 0.5rem;
-  padding: 0.75rem 1rem;
-  background: rgba(0, 0, 0, 0.8);
-  border-radius: 8px;
+.banner-title {
+  font-size: 2.5rem;
+  font-weight: 800;
   color: #fff;
-  font-size: 0.875rem;
-  font-weight: 600;
+  margin: 0 0 1rem 0;
+  text-shadow: 0 4px 20px rgba(0, 0, 0, 0.5);
 }
 
-.pulse-indicator {
-  width: 8px;
-  height: 8px;
-  background: #10b981;
+.banner-subtitle {
+  font-size: 1.25rem;
+  color: rgba(255, 255, 255, 0.8);
+  margin: 0;
+  text-shadow: 0 2px 10px rgba(0, 0, 0, 0.5);
+}
+
+/* Custom Pagination */
+.swiper-pagination {
+  bottom: 20px !important;
+  z-index: 4;
+}
+
+.custom-bullet {
+  width: 10px;
+  height: 10px;
+  background: rgba(255, 255, 255, 0.3);
+  opacity: 1;
+  transition: all 0.3s ease;
   border-radius: 50%;
-  animation: pulse 2s infinite;
+}
+
+.custom-bullet-active {
+  background: #ef4444;
+  width: 28px;
+  border-radius: 5px;
+}
+
+/* Hide default Swiper arrow pseudo-elements (we use our own buttons) */
+.swiper-button-next,
+.swiper-button-prev {
+  display: none !important;
+}
+
+/* Custom Navigation Buttons (subtle/translucent) */
+.custom-swiper-button {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 44px;
+  height: 44px;
+  border-radius: 999px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(255, 255, 255, 0.035);
+  border: 1px solid rgba(255, 255, 255, 0.06);
+  backdrop-filter: blur(4px);
+  cursor: pointer;
+  transition: all 0.22s ease;
+  z-index: 6;
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.45);
+}
+
+/* Icons inside */
+.custom-swiper-button svg {
+  font-size: 20px;
+  color: rgba(255, 255, 255, 0.62);
+}
+
+/* Hover / focus */
+.custom-swiper-button:hover,
+.custom-swiper-button:focus {
+  background: rgba(255, 255, 255, 0.08);
+  transform: translateY(-50%) scale(1.06);
+}
+
+.custom-swiper-button:active {
+  transform: translateY(-50%) scale(0.98);
+}
+
+/* Half-spacing from edges */
+.custom-swiper-button-prev {
+  left: 1rem;
+}
+.custom-swiper-button-next {
+  right: 1rem;
 }
 
 /* Floating Elements */
@@ -264,18 +282,19 @@
   top: 10%;
   right: -10%;
   animation-delay: 0s;
+  z-index: 10;
 }
-
 .el-2 {
   top: 60%;
   right: 5%;
   animation-delay: 2s;
+  z-index: 10;
 }
-
 .el-3 {
   bottom: 10%;
   right: -5%;
   animation-delay: 4s;
+  z-index: 10;
 }
 
 @keyframes float {
@@ -303,12 +322,22 @@
     font-size: 2.5rem;
   }
 
-  .hero-stats-inline {
-    gap: 1.5rem;
-  }
-
   .floating-element {
     display: none;
+  }
+
+  .banner-title {
+    font-size: 2rem;
+  }
+  .banner-subtitle {
+    font-size: 1rem;
+  }
+
+  .custom-swiper-button-prev {
+    left: 1.5rem;
+  }
+  .custom-swiper-button-next {
+    right: 1.5rem;
   }
 }
 
@@ -316,16 +345,29 @@
   .hero-modern {
     padding: 1rem;
   }
-
   .hero-buttons {
     flex-direction: column;
   }
-
   .btn {
     width: 100%;
   }
 
-  .hero-stats-inline {
-    flex-wrap: wrap;
+  .hero-visual {
+    height: 320px;
+  }
+
+  .banner-title {
+    font-size: 1.5rem;
+  }
+  .banner-subtitle {
+    font-size: 0.875rem;
+  }
+
+  .custom-swiper-button {
+    width: 40px;
+    height: 40px;
+  }
+  .custom-swiper-button svg {
+    font-size: 18px;
   }
 }

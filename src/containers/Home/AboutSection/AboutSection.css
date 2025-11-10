@@ -1,6 +1,6 @@
 /* Stats Section */
 .stats-section {
-  padding: 4rem 2rem;
+  padding: 0rem 2rem;
   background: #000;
 }
 
@@ -145,7 +145,7 @@
 
 /* Services Section */
 .services-section-modern {
-  padding: 6rem 2rem;
+  padding: 2rem 2rem;
   background: rgba(239, 68, 68, 0.02);
 }
 

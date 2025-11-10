@@ -1,9 +1,39 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
+import { Swiper, SwiperSlide } from "swiper/react";
+import { Autoplay, Pagination, Navigation } from "swiper/modules";
+import { FiChevronLeft, FiChevronRight } from "react-icons/fi";
+import "swiper/css";
+import "swiper/css/pagination";
+import "swiper/css/navigation";
 import "./HeroSection.css";
 
 const HeroSection = () => {
   const navigate = useNavigate();
+
+  const bannerSlides = [
+    {
+      id: 1,
+      title: "Medical Excellence",
+      subtitle: "Live Surgeries & Procedures",
+      bgGradient:
+        "linear-gradient(135deg, rgba(239, 68, 68, 0.3), rgba(14, 165, 233, 0.3))",
+    },
+    {
+      id: 2,
+      title: "Global Experts",
+      subtitle: "Connecting Healthcare Professionals",
+      bgGradient:
+        "linear-gradient(135deg, rgba(168, 85, 247, 0.3), rgba(236, 72, 153, 0.3))",
+    },
+    {
+      id: 3,
+      title: "24/7 Broadcasting",
+      subtitle: "Medical Content Worldwide",
+      bgGradient:
+        "linear-gradient(135deg, rgba(14, 165, 233, 0.3), rgba(16, 185, 129, 0.3))",
+    },
+  ];
 
   const handleNavClick = (e, href) => {
     e.preventDefault();
@@ -11,9 +41,7 @@ const HeroSection = () => {
       navigate(href);
     } else {
       const target = document.querySelector(href);
-      if (target) {
-        target.scrollIntoView({ behavior: "smooth", block: "start" });
-      }
+      if (target) target.scrollIntoView({ behavior: "smooth", block: "start" });
     }
   };
 
@@ -21,15 +49,9 @@ const HeroSection = () => {
     <section className="hero-modern">
       <div className="hero-container">
         <div className="hero-content-wrapper">
-          {/* Left Content */}
+          {/* Left */}
           <div className="hero-text">
-            <div className="live-badge">
-              <span className="live-dot"></span>
-              LIVE BROADCASTING
-            </div>
-
             <h1 className="hero-title">First Global Healthcare TV Channel</h1>
-
             <p className="hero-description">
               Broadcasting medical excellence 24/7 across 180+ countries.
               Connecting healthcare professionals with cutting-edge medical
@@ -60,45 +82,66 @@ const HeroSection = () => {
                 Learn More
               </a>
             </div>
-
-            {/* Quick Stats */}
-            <div className="hero-stats-inline">
-              <div className="stat-inline">
-                <span className="stat-number">24/7</span>
-                <span className="stat-text">Broadcasting</span>
-              </div>
-              <div className="stat-inline">
-                <span className="stat-number">180+</span>
-                <span className="stat-text">Countries</span>
-              </div>
-              <div className="stat-inline">
-                <span className="stat-number">50K+</span>
-                <span className="stat-text">Professionals</span>
-              </div>
-            </div>
           </div>
 
-          {/* Right Visual */}
+          {/* Right - Slider */}
           <div className="hero-visual">
             <div className="video-card">
-              <div className="video-thumbnail">
-                <div className="play-circle">
-                  <svg
-                    width="32"
-                    height="32"
-                    viewBox="0 0 32 32"
-                    fill="currentColor"
-                  >
-                    <path d="M10 6l16 10-16 10V6z" />
-                  </svg>
-                </div>
-                <div className="video-overlay">
-                  <span className="viewer-count">
-                    <span className="pulse-indicator"></span>
-                    12.5K watching now
-                  </span>
-                </div>
-              </div>
+              {/* Custom nav buttons */}
+              <button
+                className="custom-swiper-button custom-swiper-button-prev"
+                aria-label="Previous slide"
+              >
+                <FiChevronLeft />
+              </button>
+              <button
+                className="custom-swiper-button custom-swiper-button-next"
+                aria-label="Next slide"
+              >
+                <FiChevronRight />
+              </button>
+
+              <Swiper
+                modules={[Autoplay, Pagination, Navigation]}
+                effect="slide"
+                speed={800}
+                autoplay={{ delay: 4000, disableOnInteraction: false }}
+                pagination={{
+                  clickable: true,
+                  bulletClass: "swiper-pagination-bullet custom-bullet",
+                  bulletActiveClass:
+                    "swiper-pagination-bullet-active custom-bullet-active",
+                }}
+                navigation={{
+                  prevEl: ".custom-swiper-button-prev",
+                  nextEl: ".custom-swiper-button-next",
+                }}
+                onBeforeInit={(swiper) => {
+                  swiper.params.navigation.prevEl =
+                    ".custom-swiper-button-prev";
+                  swiper.params.navigation.nextEl =
+                    ".custom-swiper-button-next";
+                }}
+                loop={true}
+                // ensure Swiper picks up container size changes
+                observer={true}
+                observeParents={true}
+                className="banner-slider"
+              >
+                {bannerSlides.map((slide) => (
+                  <SwiperSlide key={slide.id}>
+                    <div
+                      className="banner-slide"
+                      style={{ background: slide.bgGradient }}
+                    >
+                      <div className="banner-content">
+                        <h3 className="banner-title">{slide.title}</h3>
+                        <p className="banner-subtitle">{slide.subtitle}</p>
+                      </div>
+                    </div>
+                  </SwiperSlide>
+                ))}
+              </Swiper>
             </div>
 
             {/* Floating Icons */}
