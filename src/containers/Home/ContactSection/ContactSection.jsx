@@ -80,7 +80,7 @@ const ContactSection = () => {
 
           {/* Right - Contact Form */}
           <div className="contact-form-modern">
-            <form onSubmit={handleSubmit}>
+            <form className="contact-form" onSubmit={handleSubmit}>
               <div className="form-grid">
                 <div className="form-group-modern">
                   <label htmlFor="name">Your Name</label>
