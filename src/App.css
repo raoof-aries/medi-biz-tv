@@ -86,3 +86,84 @@ button {
     transition-duration: 0.01ms !important;
   }
 }
+
+/* 🌌 Global Gradient Theme for Dark Sections */
+:root {
+  --bg-dark-1: rgba(8, 10, 15, 1);
+  --bg-dark-2: rgba(12, 14, 22, 1);
+  --bg-dark-3: rgba(6, 12, 22, 1);
+  --accent-red: rgba(239, 68, 68, 0.06);
+  --accent-blue: rgba(14, 165, 233, 0.14);
+  --accent-purple: rgba(168, 85, 247, 0.06);
+  --noise-opacity: 0.06;
+}
+
+.section-dark {
+  position: relative;
+  overflow: hidden;
+  z-index: 1;
+  color: #fff;
+  background: linear-gradient(
+    135deg,
+    var(--bg-dark-1) 0%,
+    var(--bg-dark-2) 35%,
+    var(--bg-dark-3) 100%
+  );
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+.section-dark::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  z-index: 0;
+  background: radial-gradient(
+      at 18% 28%,
+      var(--accent-blue) 0%,
+      transparent 45%
+    ),
+    radial-gradient(at 82% 68%, var(--accent-purple) 0%, transparent 45%),
+    radial-gradient(at 50% 100%, rgba(10, 12, 18, 0.06) 0%, transparent 60%);
+  mix-blend-mode: overlay;
+  filter: blur(60px);
+  opacity: 0.95;
+}
+
+.section-dark::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  z-index: 0;
+  background: radial-gradient(
+    ellipse at center,
+    rgba(0, 0, 0, 0) 55%,
+    rgba(0, 0, 0, 0.45) 100%
+  );
+  mix-blend-mode: multiply;
+}
+
+/* subtle noise texture */
+.section-dark .__bg-noise {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  z-index: 1;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='60' height='60' viewBox='0 0 60 60'%3E%3Cfilter id='n'%3E%3CfeTurbulence baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.18'/%3E%3C/svg%3E");
+  background-repeat: repeat;
+  opacity: var(--noise-opacity);
+  mix-blend-mode: soft-light;
+  transform: translateZ(0);
+}
+
+.section-dark > * {
+  position: relative;
+  z-index: 2;
+}
+
+.glass-icon-bg {
+  background: rgba(255, 255, 255, 0.1);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}

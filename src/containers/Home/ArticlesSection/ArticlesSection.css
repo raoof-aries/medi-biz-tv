@@ -12,7 +12,7 @@
    =========================== */
 .articles-section {
   padding: 2rem 1rem;
-  background: var(--bg);
+  /* background: var(--bg); */
   color: #fff;
   -webkit-font-smoothing: antialiased;
 }

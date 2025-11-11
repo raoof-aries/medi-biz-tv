@@ -5,7 +5,7 @@ const AboutSection = () => {
   return (
     <>
       {/* Stats Section */}
-      <section className="stats-section">
+      <section className="stats-section ">
         <div className="stats-container">
           <div className="stats-grid">
             <div className="stat-box">
@@ -84,7 +84,7 @@ const AboutSection = () => {
       </section>
 
       {/* Services Section */}
-      <section className="services-section-modern">
+      {/* <section className="services-section-modern">
         <div className="services-container-modern">
           <div className="section-header-center">
             <div className="section-badge">Our Services</div>
@@ -99,7 +99,7 @@ const AboutSection = () => {
 
           <div className="services-grid-modern">
             <div className="service-card-modern">
-              <div className="service-icon-modern red-bg">
+              <div className="service-icon-modern glass-icon-bg">
                 <span>📺</span>
               </div>
               <h3>Live Medical Events</h3>
@@ -110,7 +110,7 @@ const AboutSection = () => {
             </div>
 
             <div className="service-card-modern">
-              <div className="service-icon-modern blue-bg">
+              <div className="service-icon-modern glass-icon-bg">
                 <span>🎬</span>
               </div>
               <h3>On-Demand Library</h3>
@@ -121,7 +121,7 @@ const AboutSection = () => {
             </div>
 
             <div className="service-card-modern">
-              <div className="service-icon-modern red-bg">
+              <div className="service-icon-modern glass-icon-bg">
                 <span>📰</span>
               </div>
               <h3>Medical News Hub</h3>
@@ -132,7 +132,7 @@ const AboutSection = () => {
             </div>
 
             <div className="service-card-modern">
-              <div className="service-icon-modern blue-bg">
+              <div className="service-icon-modern glass-icon-bg">
                 <span>👥</span>
               </div>
               <h3>Expert Interviews</h3>
@@ -143,7 +143,7 @@ const AboutSection = () => {
             </div>
 
             <div className="service-card-modern">
-              <div className="service-icon-modern red-bg">
+              <div className="service-icon-modern glass-icon-bg">
                 <span>🏆</span>
               </div>
               <h3>Award Coverage</h3>
@@ -154,7 +154,7 @@ const AboutSection = () => {
             </div>
 
             <div className="service-card-modern">
-              <div className="service-icon-modern blue-bg">
+              <div className="service-icon-modern glass-icon-bg">
                 <span>🔐</span>
               </div>
               <h3>Secure Platform</h3>
@@ -165,7 +165,7 @@ const AboutSection = () => {
             </div>
           </div>
         </div>
-      </section>
+      </section> */}
     </>
   );
 };

@@ -7,7 +7,7 @@ import {
 
 const Home = () => {
   return (
-    <div className="modern-wrapper">
+    <div className="modern-wrapper section-dark">
       <HeroSection />
       <AboutSection />
       <ArticlesSection />

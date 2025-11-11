@@ -1,7 +1,7 @@
 /* Stats Section */
 .stats-section {
   padding: 0rem 2rem;
-  background: #000;
+  /* background: #000; */
 }
 
 .stats-container {
@@ -45,7 +45,7 @@
 /* About Section */
 .about-section-modern {
   padding: 6rem 2rem;
-  background: #000;
+  /* background: #000; */
 }
 
 .about-container-modern {
@@ -146,7 +146,7 @@
 /* Services Section */
 .services-section-modern {
   padding: 2rem 2rem;
-  background: rgba(239, 68, 68, 0.02);
+  /* background: rgba(239, 68, 68, 0.02); */
 }
 
 .services-container-modern {

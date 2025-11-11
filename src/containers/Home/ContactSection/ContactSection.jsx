@@ -44,7 +44,7 @@ const ContactSection = () => {
           {/* Left - Contact Info */}
           <div className="contact-info-modern">
             <div className="contact-card">
-              <div className="contact-icon-modern red-bg">
+              <div className="contact-icon-modern glass-icon-bg">
                 <span>📧</span>
               </div>
               <div className="contact-details">
@@ -54,7 +54,7 @@ const ContactSection = () => {
             </div>
 
             <div className="contact-card">
-              <div className="contact-icon-modern blue-bg">
+              <div className="contact-icon-modern glass-icon-bg">
                 <span>📞</span>
               </div>
               <div className="contact-details">
@@ -64,7 +64,7 @@ const ContactSection = () => {
             </div>
 
             <div className="contact-card">
-              <div className="contact-icon-modern red-bg">
+              <div className="contact-icon-modern glass-icon-bg">
                 <span>📍</span>
               </div>
               <div className="contact-details">
