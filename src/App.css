@@ -87,15 +87,16 @@ button {
   }
 }
 
-/* 🌌 Global Gradient Theme for Dark Sections */
+/* 🌌 Enhanced Global Gradient Theme for Dark Sections */
 :root {
   --bg-dark-1: rgba(8, 10, 15, 1);
   --bg-dark-2: rgba(12, 14, 22, 1);
   --bg-dark-3: rgba(6, 12, 22, 1);
-  --accent-red: rgba(239, 68, 68, 0.06);
-  --accent-blue: rgba(14, 165, 233, 0.14);
-  --accent-purple: rgba(168, 85, 247, 0.06);
-  --noise-opacity: 0.06;
+  --accent-red: rgba(239, 68, 68, 0.22);
+  --accent-blue: rgba(14, 165, 233, 0.35);
+  --accent-purple: rgba(168, 85, 247, 0.25);
+  --accent-teal: rgba(20, 184, 166, 0.18);
+  --noise-opacity: 0.08;
 }
 
 .section-dark {
@@ -105,9 +106,9 @@ button {
   color: #fff;
   background: linear-gradient(
     135deg,
-    var(--bg-dark-1) 0%,
-    var(--bg-dark-2) 35%,
-    var(--bg-dark-3) 100%
+    rgba(5, 8, 15, 1) 0%,
+    rgba(10, 12, 20, 1) 35%,
+    rgba(4, 10, 20, 1) 100%
   );
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
@@ -120,15 +121,41 @@ button {
   pointer-events: none;
   z-index: 0;
   background: radial-gradient(
-      at 18% 28%,
-      var(--accent-blue) 0%,
-      transparent 45%
+      ellipse 1200px 800px at 15% 20%,
+      rgba(14, 165, 233, 0.4) 0%,
+      transparent 60%
     ),
-    radial-gradient(at 82% 68%, var(--accent-purple) 0%, transparent 45%),
-    radial-gradient(at 50% 100%, rgba(10, 12, 18, 0.06) 0%, transparent 60%);
-  mix-blend-mode: overlay;
-  filter: blur(60px);
-  opacity: 0.95;
+    radial-gradient(
+      ellipse 1000px 700px at 85% 65%,
+      rgba(168, 85, 247, 0.35) 0%,
+      transparent 60%
+    ),
+    radial-gradient(
+      ellipse 900px 600px at 50% 95%,
+      rgba(239, 68, 68, 0.3) 0%,
+      transparent 65%
+    ),
+    radial-gradient(
+      ellipse 700px 550px at 75% 35%,
+      rgba(20, 184, 166, 0.25) 0%,
+      transparent 55%
+    );
+  mix-blend-mode: screen;
+  filter: blur(120px);
+  opacity: 0.8;
+  animation: gradientShift 20s ease-in-out infinite;
+}
+
+@keyframes gradientShift {
+  0%,
+  100% {
+    transform: translateY(0) scale(1);
+    opacity: 1;
+  }
+  50% {
+    transform: translateY(-20px) scale(1.05);
+    opacity: 0.95;
+  }
 }
 
 .section-dark::after {
@@ -138,10 +165,16 @@ button {
   pointer-events: none;
   z-index: 0;
   background: radial-gradient(
-    ellipse at center,
-    rgba(0, 0, 0, 0) 55%,
-    rgba(0, 0, 0, 0.45) 100%
-  );
+      ellipse at center,
+      rgba(0, 0, 0, 0) 35%,
+      rgba(0, 0, 0, 0.6) 100%
+    ),
+    linear-gradient(
+      180deg,
+      rgba(0, 0, 0, 0) 0%,
+      rgba(0, 0, 0, 0.2) 50%,
+      rgba(0, 0, 0, 0.4) 100%
+    );
   mix-blend-mode: multiply;
 }
 
@@ -166,4 +199,19 @@ button {
 .glass-icon-bg {
   background: rgba(255, 255, 255, 0.1);
   border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+/* Subtle glow effects for cards and elements */
+.section-dark .card,
+.section-dark .stat-card,
+.section-dark .feature-card {
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.section-dark .card:hover,
+.section-dark .stat-card:hover,
+.section-dark .feature-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 0 40px rgba(14, 165, 233, 0.15),
+    0 0 80px rgba(168, 85, 247, 0.1);
 }
