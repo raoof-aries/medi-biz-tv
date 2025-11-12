@@ -110,7 +110,10 @@ const Navbar = () => {
             </a>
           </li>
           <li>
-            <a href="/events" onClick={(e) => handleNavClick(e, "/events")}>
+            <a
+              href="/upcoming-events"
+              onClick={(e) => handleNavClick(e, "/upcoming-events")}
+            >
               Events
             </a>
           </li>
