@@ -105,8 +105,8 @@ const Navbar = () => {
             </a>
           </li>
           <li>
-            <a href="/news" onClick={(e) => handleNavClick(e, "/news")}>
-              News
+            <a href="/articles" onClick={(e) => handleNavClick(e, "/articles")}>
+              Articles & Media
             </a>
           </li>
           <li>
