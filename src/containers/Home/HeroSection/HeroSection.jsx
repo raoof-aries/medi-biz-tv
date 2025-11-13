@@ -8,30 +8,30 @@ import "swiper/css/pagination";
 import "swiper/css/navigation";
 import "./HeroSection.css";
 
+import Banner1 from "../../../assets/images/homePage/banner1.webp";
+import Banner2 from "../../../assets/images/homePage/banner2.webp";
+import Banner3 from "../../../assets/images/homePage/banner3.webp";
+import Banner4 from "../../../assets/images/homePage/banner4.webp";
+
 const HeroSection = () => {
   const navigate = useNavigate();
 
   const bannerSlides = [
     {
       id: 1,
-      title: "Medical Excellence",
-      subtitle: "Live Surgeries & Procedures",
-      bgGradient:
-        "linear-gradient(135deg, rgba(239, 68, 68, 0.3), rgba(14, 165, 233, 0.3))",
+      image: Banner1,
     },
     {
       id: 2,
-      title: "Global Experts",
-      subtitle: "Connecting Healthcare Professionals",
-      bgGradient:
-        "linear-gradient(135deg, rgba(168, 85, 247, 0.3), rgba(236, 72, 153, 0.3))",
+      image: Banner2,
     },
     {
       id: 3,
-      title: "24/7 Broadcasting",
-      subtitle: "Medical Content Worldwide",
-      bgGradient:
-        "linear-gradient(135deg, rgba(14, 165, 233, 0.3), rgba(16, 185, 129, 0.3))",
+      image: Banner3,
+    },
+    {
+      id: 4,
+      image: Banner4,
     },
   ];
 
@@ -123,21 +123,18 @@ const HeroSection = () => {
                     ".custom-swiper-button-next";
                 }}
                 loop={true}
-                // ensure Swiper picks up container size changes
                 observer={true}
                 observeParents={true}
                 className="banner-slider"
               >
                 {bannerSlides.map((slide) => (
                   <SwiperSlide key={slide.id}>
-                    <div
-                      className="banner-slide"
-                      style={{ background: slide.bgGradient }}
-                    >
-                      <div className="banner-content">
-                        <h3 className="banner-title">{slide.title}</h3>
-                        <p className="banner-subtitle">{slide.subtitle}</p>
-                      </div>
+                    <div className="banner-slide">
+                      <img
+                        src={slide.image}
+                        alt={`Banner ${slide.id}`}
+                        className="banner-image"
+                      />
                     </div>
                   </SwiperSlide>
                 ))}
