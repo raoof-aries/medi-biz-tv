@@ -348,9 +348,9 @@ const ArticlesSection = () => {
       <div className="articles-container">
         {/* Header */}
         <div className="articles-header">
-          <span className="section-label">Media & Resources</span>
-          <h2 className="section-title">Explore Our Content</h2>
-          <p className="section-description">
+          <span className="article-section-label">Media & Resources</span>
+          <h2 className="article-section-title">Explore Our Content</h2>
+          <p className="article-section-description">
             Access comprehensive medical content, expert insights, and the
             latest healthcare updates
           </p>

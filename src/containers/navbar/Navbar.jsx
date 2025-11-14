@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
+import { HiMenuAlt3, HiX } from "react-icons/hi";
 import "./Navbar.css";
 import Logo from "../../assets/logo.png";
 
@@ -88,9 +89,11 @@ const Navbar = () => {
           onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
           aria-label="Toggle menu"
         >
-          <span></span>
-          <span></span>
-          <span></span>
+          {mobileMenuOpen ? (
+            <HiX className="menu-icon" />
+          ) : (
+            <HiMenuAlt3 className="menu-icon" />
+          )}
         </button>
 
         <ul className={`nav-links ${mobileMenuOpen ? "mobile-active" : ""}`}>

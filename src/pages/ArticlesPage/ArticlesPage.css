@@ -40,7 +40,7 @@ body {
   text-align: center;
 }
 
-.hero-label {
+.article-hero-label {
   color: var(--red);
   font-size: 0.8rem;
   font-weight: 700;
@@ -50,16 +50,16 @@ body {
   margin-bottom: 1rem;
 }
 
-.hero-title {
+.article-hero-title {
   font-size: 3.5rem;
   font-weight: 900;
-  margin-bottom: 1.5rem;
+  /* margin-bottom: 1.5rem; */
   color: #fff;
   line-height: 1.1;
   letter-spacing: -0.02em;
 }
 
-.hero-description {
+.article-hero-description {
   color: var(--muted);
   font-size: 1.15rem;
   max-width: 760px;
@@ -352,7 +352,7 @@ body {
    Responsive Design
    =========================== */
 @media (max-width: 768px) {
-  .hero-title {
+  .article-hero-title {
     font-size: 2.5rem;
   }
 
@@ -366,11 +366,11 @@ body {
 }
 
 @media (max-width: 520px) {
-  .hero-title {
+  .article-hero-title {
     font-size: 2rem;
   }
 
-  .hero-description {
+  .article-hero-description {
     font-size: 1rem;
   }
 
@@ -384,7 +384,7 @@ body {
     height: 240px;
   }
 
-  .hero-title {
+  .article-hero-title {
     font-size: 4rem;
   }
 }

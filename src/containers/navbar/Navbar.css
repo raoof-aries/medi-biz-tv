@@ -39,35 +39,30 @@
 /* Mobile Menu Toggle Button */
 .mobile-menu-toggle {
   display: none;
-  flex-direction: column;
-  gap: 6px;
   background: transparent;
   border: none;
   cursor: pointer;
   padding: 8px;
   z-index: 1001;
+  align-items: center;
+  justify-content: center;
 }
 
-.mobile-menu-toggle span {
-  width: 28px;
-  height: 3px;
-  background: linear-gradient(90deg, var(--primary), var(--accent));
-  border-radius: 3px;
+.menu-icon {
+  width: 32px;
+  height: 32px;
+  color: #ffffff;
   transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-  display: block;
 }
 
-.mobile-menu-toggle.active span:nth-child(1) {
-  transform: translateY(9px) rotate(45deg);
+.mobile-menu-toggle:hover .menu-icon {
+  color: var(--primary);
+  filter: drop-shadow(0 0 8px rgba(14, 165, 233, 0.5));
 }
 
-.mobile-menu-toggle.active span:nth-child(2) {
-  opacity: 0;
-  transform: translateX(-20px);
-}
-
-.mobile-menu-toggle.active span:nth-child(3) {
-  transform: translateY(-9px) rotate(-45deg);
+.mobile-menu-toggle.active:hover .menu-icon {
+  color: #ffffff;
+  filter: none;
 }
 
 /* Navigation Links */
