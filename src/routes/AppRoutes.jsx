@@ -9,6 +9,7 @@ const GalleryPage = lazy(() => import("../pages/GalleryPage/GalleryPage.jsx"));
 const ArticlesPage = lazy(() =>
   import("../pages/ArticlesPage/ArticlesPage.jsx")
 );
+const LiveTv = lazy(() => import("../pages/LiveTV/LiveTv.jsx"));
 
 const AppRoutes = () => {
   return (
@@ -24,6 +25,7 @@ const AppRoutes = () => {
       <Route path="/upcoming-events" element={<Events />} exact />
       <Route path="/articles" element={<ArticlesPage />} exact />
       <Route path="/gallery" element={<GalleryPage />} exact />
+      <Route path="/live" element={<LiveTv />} exact />
 
       {/* Unknown Routes */}
 

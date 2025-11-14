@@ -123,11 +123,8 @@ const Navbar = () => {
             </a>
           </li>
           <li>
-            <a
-              href="/live#videoArchives"
-              onClick={(e) => handleNavClick(e, "/live#videoArchives")}
-            >
-              Video Archives
+            <a href="/gallery" onClick={(e) => handleNavClick(e, "/gallery")}>
+              Gallery
             </a>
           </li>
           <li>

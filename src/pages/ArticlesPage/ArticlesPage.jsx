@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { FaPlay, FaCalendarAlt, FaUser, FaArrowRight } from "react-icons/fa";
+import { FaCalendarAlt, FaUser, FaArrowRight } from "react-icons/fa";
 import "./ArticlesPage.css";
 
 const ArticlesPage = () => {
@@ -8,7 +8,6 @@ const ArticlesPage = () => {
   const tabs = [
     { id: "featured", label: "Featured Articles" },
     { id: "health", label: "Health Updates" },
-    { id: "videos", label: "Top Videos" },
     { id: "news", label: "Latest News" },
   ];
 
@@ -85,32 +84,6 @@ const ArticlesPage = () => {
           "Simple yet effective strategies to improve your daily health routine...",
         date: "Nov 8, 2024",
         author: "Dr. Michael Chen",
-      },
-    ],
-    videos: [
-      {
-        id: 1,
-        title: "Not Ignore If You Have Cancer",
-        duration: "12:45",
-        views: "2.3K",
-        thumbnail:
-          "https://images.unsplash.com/photo-1576091160550-2173dba999ef?w=1200&h=800&fit=crop",
-      },
-      {
-        id: 2,
-        title: "Getting Started In Plastic",
-        duration: "8:30",
-        views: "1.8K",
-        thumbnail:
-          "https://images.unsplash.com/photo-1559757175-5700dde675bc?w=1200&h=800&fit=crop",
-      },
-      {
-        id: 3,
-        title: "Can Success In The Operating Room",
-        duration: "15:20",
-        views: "3.1K",
-        thumbnail:
-          "https://images.unsplash.com/photo-1631815588090-d4bfec5b1ccb?w=1200&h=800&fit=crop",
       },
     ],
     news: [
@@ -232,32 +205,6 @@ const ArticlesPage = () => {
         </div>
       </article>
     ),
-    videos: (video) => (
-      <article key={video.id} className="article-card video-card">
-        <div className="article-media">
-          <img
-            src={video.thumbnail}
-            alt={video.title}
-            className="article-image"
-          />
-          <div className="video-overlay">
-            <div className="video-play-btn">
-              <FaPlay />
-            </div>
-          </div>
-          <div className="video-duration">{video.duration}</div>
-        </div>
-        <div className="article-body">
-          <h3 className="article-title">{video.title}</h3>
-          <p className="video-views">{video.views} views</p>
-          <div className="card-cta">
-            <button className="article-link">
-              Watch <FaArrowRight />
-            </button>
-          </div>
-        </div>
-      </article>
-    ),
     news: (news) => (
       <article key={news.id} className="article-card">
         <div className="article-media">
@@ -289,7 +236,7 @@ const ArticlesPage = () => {
       <section className="page-hero ">
         <div className="__bg-noise"></div>
         <span className="hero-label">Media & Resources</span>
-        <h1 className="hero-title">Articles & Media Hub</h1>
+        <h1 className="hero-title">Articles & Updates</h1>
         <p className="hero-description">
           Access comprehensive medical content, expert insights, and the latest
           healthcare updates from leading professionals worldwide
