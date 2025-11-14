@@ -379,13 +379,6 @@ const ArticlesSection = () => {
 
         {/* Content */}
         <div className="content-wrapper">{renderContent()}</div>
-
-        {/* View All Button */}
-        <div className="view-all-wrapper">
-          <button className="view-all-btn">
-            View All {tabs.find((t) => t.id === activeTab)?.label}
-          </button>
-        </div>
       </div>
     </section>
   );
