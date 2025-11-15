@@ -32,7 +32,7 @@ const Navbar = () => {
     // If we have a hash (e.g. #contact), try to scroll to that element.
     if (location.hash) {
       // Small timeout to allow DOM updates after navigation
-      setTimeout(() => {
+      setTimeout(() => {  
         const el = document.querySelector(location.hash);
         if (el) {
           el.scrollIntoView({ behavior: "smooth", block: "start" });

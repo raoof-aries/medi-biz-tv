@@ -173,11 +173,6 @@
     padding: 3rem 1rem;
   }
 
-  .contact-card {
-    flex-direction: column;
-    text-align: center;
-  }
-
   .contact-icon-modern {
     margin: 0 auto;
   }
