@@ -1,123 +1,173 @@
 import { useState, useEffect } from "react";
+import { Modal, Loader } from "../../components";
 import "./LiveTv.css";
 
+const LIVE_STREAM_URL =
+  "https://iframes.5centscdn.in/5centscdn/hls/skin1/k7dtpmxf10lcpdl2/aHR0cHM6Ly80M3dyempucHFveGUtaGxzLWxpdmUud21uY2RuLm5ldC9tYXJpbmViaXp0dmxpdmUvbWFyaW5lYml6dHZsaXZlL3BsYXlsaXN0Lm0zdTg=?showcv=true&title=marinebiztvlive/marinebiztvlive&autoplay=1";
+
 const LiveTv = () => {
-  const [currentFilter, setCurrentFilter] = useState("all");
+  const [currentFilter, setCurrentFilter] = useState("recent");
   const [modalData, setModalData] = useState({
     isOpen: false,
     videoUrl: "",
     title: "",
+    isMp4: false,
   });
-  const [liveVideoSrc, setLiveVideoSrc] = useState(
-    "https://iframes.5centscdn.in/5centscdn/hls/skin1/k7dtpmxf10lcpdl2/aHR0cHM6Ly80M3dyempucHFveGUtaGxzLWxpdmUud21uY2RuLm5ldC9tYXJpbmViaXp0dmxpdmUvbWFyaW5lYml6dHZsaXZlL3BsYXlsaXN0Lm0zdTg=?showcv=true&title=marinebiztvlive/marinebiztvlive&autoplay=1&muted=1"
-  );
+  const [liveVideoSrc, setLiveVideoSrc] = useState(LIVE_STREAM_URL);
+  const [videoArchives, setVideoArchives] = useState([]);
+  const [categories, setCategories] = useState([]);
+  const [loading, setLoading] = useState(true);
 
-  const videoArchives = [
-    {
-      id: 1,
-      title: "GAIP Live: Tech Talk Wednesday",
-      description:
-        "Weekly discussion on emerging technologies, AI developments, and industry insights with special guests.",
-      duration: "1:24:17",
-      category: "tech-talk",
-      videoUrl: "https://www.youtube.com/embed/dQw4w9WgXcQ",
-      thumbnailUrl: "https://picsum.photos/320/180?random=1",
-    },
-    {
-      id: 2,
-      title: "Morning Show: Community Updates",
-      description:
-        "Latest updates from the GAIP community, project showcases, and upcoming events discussion.",
-      duration: "45:32",
-      category: "community",
-      videoUrl: "https://www.youtube.com/embed/dQw4w9WgXcQ",
-      thumbnailUrl: "https://picsum.photos/320/180?random=2",
-    },
-    {
-      id: 3,
-      title: "Live Coding Session: React Development",
-      description:
-        "Building a real-time dashboard with React, WebSockets, and modern development practices.",
-      duration: "2:15:48",
-      category: "coding",
-      videoUrl: "https://www.youtube.com/embed/dQw4w9WgXcQ",
-      thumbnailUrl: null,
-    },
-    {
-      id: 4,
-      title: "GAIP News Tonight",
-      description:
-        "Evening news roundup covering tech industry updates, market analysis, and community highlights.",
-      duration: "38:29",
-      category: "news",
-      videoUrl: "https://www.youtube.com/embed/dQw4w9WgXcQ",
-      thumbnailUrl: "https://picsum.photos/320/180?random=4",
-    },
-    {
-      id: 5,
-      title: "Weekend Workshop: Digital Marketing",
-      description:
-        "Comprehensive guide to digital marketing strategies, SEO best practices, and social media optimization.",
-      duration: "1:52:15",
-      category: "workshop",
-      videoUrl: "https://www.youtube.com/embed/dQw4w9WgXcQ",
-      thumbnailUrl: "https://picsum.photos/320/180?random=5",
-    },
-    {
-      id: 6,
-      title: "Friday Q&A: Ask the Experts",
-      description:
-        "Open Q&A session where community members get answers from industry experts and GAIP team members.",
-      duration: "1:07:43",
-      category: "community",
-      videoUrl: "https://www.youtube.com/embed/dQw4w9WgXcQ",
-      thumbnailUrl: null,
-    },
-    {
-      id: 7,
-      title: "Special Event: Product Launch",
-      description:
-        "Exclusive launch event showcasing new GAIP features, roadmap updates, and interactive demonstrations.",
-      duration: "1:33:21",
-      category: "events",
-      videoUrl: "https://www.youtube.com/embed/dQw4w9WgXcQ",
-      thumbnailUrl: "https://picsum.photos/320/180?random=7",
-    },
-    {
-      id: 8,
-      title: "Tutorial Tuesday: Web Development",
-      description:
-        "Step-by-step tutorial on building modern web applications with the latest frameworks and tools.",
-      duration: "1:18:56",
-      category: "coding",
-      videoUrl: "https://www.youtube.com/embed/dQw4w9WgXcQ",
-      thumbnailUrl: "https://picsum.photos/320/180?random=8",
-    },
-  ];
+  // Helper: detect mp4 & create embed conversion
+  const processVideoRecord = (video) => {
+    const rawUrl = video.video_url || "";
+    let videoUrl = rawUrl;
+    let isMp4 = false;
 
-  const categories = {
-    all: "All Videos",
-    "tech-talk": "Tech Talk",
-    community: "Community",
-    coding: "Coding",
-    news: "News",
-    workshop: "Workshop",
-    events: "Events",
+    const urlLower = rawUrl.toLowerCase();
+
+    if (urlLower.includes(".mp4")) {
+      isMp4 = true;
+      videoUrl = rawUrl;
+    } else if (
+      urlLower.includes("youtu.be") ||
+      urlLower.includes("youtube.com/watch")
+    ) {
+      try {
+        if (urlLower.includes("youtu.be")) {
+          const parts = rawUrl.split("/");
+          const id = parts[parts.length - 1];
+          videoUrl = `https://www.youtube.com/embed/${id}`;
+        } else {
+          const urlObj = new URL(rawUrl);
+          const v = urlObj.searchParams.get("v");
+          if (v) videoUrl = `https://www.youtube.com/embed/${v}`;
+        }
+      } catch (e) {
+        videoUrl = rawUrl;
+      }
+    } else if (urlLower.includes("vimeo.com")) {
+      if (
+        urlLower.includes("player.vimeo.com") ||
+        urlLower.includes("/external/")
+      ) {
+        videoUrl = rawUrl;
+      } else {
+        const cleanIdMatch = rawUrl.match(
+          /vimeo\.com\/(?:video\/)?(\d+)(?:$|[?#])/
+        );
+        if (cleanIdMatch && cleanIdMatch[1]) {
+          videoUrl = `https://player.vimeo.com/video/${cleanIdMatch[1]}`;
+        } else {
+          videoUrl = rawUrl;
+        }
+      }
+    } else {
+      videoUrl = rawUrl;
+    }
+
+    let createdAt = null;
+    try {
+      createdAt = video.created_at ? new Date(video.created_at) : null;
+    } catch (e) {
+      createdAt = null;
+    }
+
+    return {
+      id: video.id,
+      title: video.video_title,
+      description: video.video_description,
+      duration: video.video_duration || "N/A",
+      category: String(video.video_type || ""),
+      videoUrl,
+      rawUrl,
+      isMp4,
+      thumbnailUrl: video.thumbnail_url,
+      createdAt,
+    };
   };
 
-  const openModal = (videoUrl, title) => {
-    setLiveVideoSrc("");
-    setModalData({ isOpen: true, videoUrl: videoUrl + "?autoplay=1", title });
-    document.body.style.overflow = "hidden";
+  const withAutoplay = (url) => {
+    if (!url) return url;
+    try {
+      const u = new URL(url);
+      if (
+        u.hostname.includes("youtube.com") &&
+        u.pathname.includes("/embed/")
+      ) {
+        const p = u.searchParams;
+        p.set("autoplay", "1");
+        p.set("rel", "0");
+        return u.toString();
+      } else if (u.hostname.includes("player.vimeo.com")) {
+        const p = u.searchParams;
+        p.set("autoplay", "1");
+        return u.toString();
+      }
+      return url;
+    } catch (e) {
+      if (url.includes("?")) return `${url}&autoplay=1`;
+      return `${url}?autoplay=1`;
+    }
   };
 
-  const closeModal = () => {
-    setModalData({ isOpen: false, videoUrl: "", title: "" });
-    setLiveVideoSrc(
-      "https://iframes.5centscdn.in/5centscdn/hls/skin1/kygt6dlsg6zh7rmq/aHR0cHM6Ly80M3dyempucHFveGUtaGxzLWxpdmUud21uY2RuLm5ldC9HQUlQL1RWL3BsYXlsaXN0Lm0zdTg=?showcv=true&title=GAIP/TV&autoplay=1&muted=1"
-    );
-    document.body.style.overflow = "auto";
-  };
+  useEffect(() => {
+    let canceled = false;
+
+    const fetchData = async () => {
+      setLoading(true);
+      try {
+        const [archivesRes, categoriesRes] = await Promise.all([
+          fetch(
+            "https://www.medibiztv.com/admin/api/services.php?action=videoarchives"
+          ),
+          fetch(
+            "https://www.medibiztv.com/admin/api/services.php?action=videoArchivesCategories"
+          ),
+        ]);
+
+        const archivesData = await archivesRes.json();
+        const categoriesData = await categoriesRes.json();
+
+        if (
+          !canceled &&
+          categoriesData &&
+          categoriesData.status === "success"
+        ) {
+          const cats = categoriesData.data.map((c) => ({
+            id: String(c.id),
+            name: c.category_name,
+          }));
+          setCategories(cats);
+        } else {
+          setCategories([]);
+        }
+
+        if (!canceled && archivesData && archivesData.status === "success") {
+          const processed = archivesData.data.map(processVideoRecord);
+
+          processed.sort((a, b) => {
+            const ta = a.createdAt ? a.createdAt.getTime() : 0;
+            const tb = b.createdAt ? b.createdAt.getTime() : 0;
+            return tb - ta;
+          });
+
+          setVideoArchives(processed);
+        } else {
+          setVideoArchives([]);
+        }
+      } catch (err) {
+        console.error("Error fetching LiveTv data:", err);
+      } finally {
+        if (!canceled) setLoading(false);
+      }
+    };
+
+    fetchData();
+    return () => {
+      canceled = true;
+    };
+  }, []);
 
   useEffect(() => {
     const handleEscape = (e) => {
@@ -127,29 +177,63 @@ const LiveTv = () => {
     return () => document.removeEventListener("keydown", handleEscape);
   }, []);
 
-  const filteredArchives =
-    currentFilter === "all"
-      ? videoArchives
-      : videoArchives.filter((archive) => archive.category === currentFilter);
+  const openModal = (archive) => {
+    const url = archive.isMp4 ? archive.rawUrl : withAutoplay(archive.videoUrl);
+    setModalData({
+      isOpen: true,
+      videoUrl: url,
+      title: archive.title,
+      isMp4: archive.isMp4,
+    });
+    setLiveVideoSrc("");
+    document.body.style.overflow = "hidden";
+  };
+
+  const closeModal = () => {
+    setModalData({ isOpen: false, videoUrl: "", title: "", isMp4: false });
+    setLiveVideoSrc(LIVE_STREAM_URL);
+    document.body.style.overflow = "auto";
+  };
+
+  const filteredArchives = (() => {
+    if (currentFilter === "recent") {
+      return videoArchives.slice(0, 12);
+    }
+    if (!currentFilter) return [];
+    return videoArchives.filter(
+      (a) => String(a.category) === String(currentFilter)
+    );
+  })();
+
+  const visibleCategories = categories.filter((cat) =>
+    videoArchives.some((a) => String(a.category) === String(cat.id))
+  );
+
+  if (loading) {
+    return (
+      <Modal>
+        <Loader />
+      </Modal>
+    );
+  }
 
   return (
     <div className="live-tv-wrapper section-dark">
       <div className="live-tv-main-wrapper">
-        {/* Video Section */}
         <section className="live-tv-video-section">
-          {/* <a className="live-tv-back-button" href="https://gaip.co/">
-            <span>←</span>
-            <p>Back to Home</p>
-          </a> */}
-          {/* <h1 className="live-tv-page-title">GAIP Live TV</h1> */}
           <div className="live-tv-video-container">
-            {liveVideoSrc && (
+            {liveVideoSrc ? (
               <iframe
                 className="live-tv-video-frame"
                 src={liveVideoSrc}
                 allow="autoplay; fullscreen; picture-in-picture"
                 allowFullScreen
-              ></iframe>
+                title="Live Stream"
+              />
+            ) : (
+              <div className="live-tv-video-placeholder">
+                <p>Click a video to play</p>
+              </div>
             )}
           </div>
           <div className="live-tv-scroll-indicator">
@@ -158,66 +242,94 @@ const LiveTv = () => {
           </div>
         </section>
 
-        {/* Transition Element */}
-        {/* <div className="live-tv-transition-element"></div> */}
-
-        {/* Archives Section */}
         <section className="live-tv-archives-section" id="videoArchives">
           <div className="live-tv-archives-header">
             <h2 className="live-tv-archives-title">Video Archives</h2>
+
             <div className="live-tv-category-filter">
-              {Object.entries(categories).map(([key, label]) => (
+              <button
+                className={`live-tv-filter-button ${
+                  currentFilter === "recent" ? "active" : ""
+                }`}
+                onClick={() => setCurrentFilter("recent")}
+              >
+                Recent
+              </button>
+
+              {visibleCategories.map((cat) => (
                 <button
-                  key={key}
+                  key={cat.id}
                   className={`live-tv-filter-button ${
-                    currentFilter === key ? "active" : ""
+                    String(currentFilter) === String(cat.id) ? "active" : ""
                   }`}
-                  onClick={() => setCurrentFilter(key)}
+                  onClick={() => setCurrentFilter(String(cat.id))}
                 >
-                  {label}
+                  {cat.name.charAt(0).toUpperCase() + cat.name.slice(1)}
                 </button>
               ))}
             </div>
           </div>
 
           <div className="live-tv-archives-grid">
-            {filteredArchives.map((archive) => (
-              <div
-                key={archive.id}
-                className={`live-tv-archive-card visible`}
-                onClick={() => openModal(archive.videoUrl, archive.title)}
-              >
+            {filteredArchives && filteredArchives.length > 0 ? (
+              filteredArchives.map((archive) => (
                 <div
-                  className={`live-tv-card-thumbnail ${
-                    !archive.thumbnailUrl ? "no-image" : ""
-                  }`}
-                  style={
-                    archive.thumbnailUrl
-                      ? { backgroundImage: `url('${archive.thumbnailUrl}')` }
-                      : {}
-                  }
+                  key={archive.id}
+                  className="live-tv-archive-card visible"
+                  onClick={() => openModal(archive)}
                 >
-                  {!archive.thumbnailUrl && (
-                    <span style={{ fontSize: "2rem" }}>🎥</span>
-                  )}
-                  <div className="live-tv-card-category">
-                    {categories[archive.category] || archive.category}
+                  <div
+                    className={`live-tv-card-thumbnail ${
+                      !archive.thumbnailUrl ? "no-image" : ""
+                    }`}
+                    style={
+                      archive.thumbnailUrl
+                        ? { backgroundImage: `url('${archive.thumbnailUrl}')` }
+                        : {}
+                    }
+                  >
+                    {!archive.thumbnail_url && (
+                      <span style={{ fontSize: "2rem" }}>🎥</span>
+                    )}
+
+                    <div className="live-tv-card-category">
+                      {categories
+                        .find((c) => String(c.id) === String(archive.category))
+                        ?.name.charAt(0)
+                        .toUpperCase() +
+                        categories
+                          .find(
+                            (c) => String(c.id) === String(archive.category)
+                          )
+                          ?.name.slice(1) || "Uncategorized"}
+                    </div>
+                    {/* <div className="live-tv-card-duration">
+                      {archive.duration}
+                    </div> */}
                   </div>
-                  <div className="live-tv-card-duration">
-                    {archive.duration}
-                  </div>
+
+                  <h3 className="live-tv-card-title">{archive.title}</h3>
+                  <p className="live-tv-card-description">
+                    {archive.description}
+                  </p>
                 </div>
-                <h3 className="live-tv-card-title">{archive.title}</h3>
-                <p className="live-tv-card-description">
-                  {archive.description}
-                </p>
-              </div>
-            ))}
+              ))
+            ) : (
+              <p
+                style={{
+                  textAlign: "center",
+                  width: "100%",
+                  padding: "2rem",
+                  color: "rgba(255,255,255,0.5)",
+                }}
+              >
+                No videos found in this category.
+              </p>
+            )}
           </div>
         </section>
       </div>
 
-      {/* Video Modal */}
       {modalData.isOpen && (
         <div className="live-tv-modal show" onClick={closeModal}>
           <div
@@ -230,13 +342,26 @@ const LiveTv = () => {
                 ✕
               </button>
             </div>
+
             <div className="live-tv-modal-video-container">
-              <iframe
-                className="live-tv-modal-video"
-                src={modalData.videoUrl}
-                allow="autoplay; fullscreen; picture-in-picture"
-                allowFullScreen
-              ></iframe>
+              {!modalData.isMp4 && (
+                <iframe
+                  className="live-tv-modal-video"
+                  src={modalData.videoUrl}
+                  allow="autoplay; fullscreen; picture-in-picture"
+                  allowFullScreen
+                  title={modalData.title}
+                />
+              )}
+
+              {modalData.isMp4 && (
+                <video
+                  className="live-tv-modal-video"
+                  src={modalData.videoUrl}
+                  controls
+                  autoPlay
+                />
+              )}
             </div>
           </div>
         </div>

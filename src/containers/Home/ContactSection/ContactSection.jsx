@@ -49,7 +49,7 @@ const ContactSection = () => {
               </div>
               <div className="contact-details">
                 <h4>Email</h4>
-                <p>info@medibiztv.com</p>
+                <p>johnson@marinebiz.tv</p>
               </div>
             </div>
 
@@ -59,11 +59,11 @@ const ContactSection = () => {
               </div>
               <div className="contact-details">
                 <h4>Phone</h4>
-                <p>+1 (555) 123-4567</p>
+                <p>+91 9539000513</p>
               </div>
             </div>
 
-            <div className="contact-card">
+            {/* <div className="contact-card">
               <div className="contact-icon-modern glass-icon-bg">
                 <span>📍</span>
               </div>
@@ -75,7 +75,7 @@ const ContactSection = () => {
                   Healthcare District, NY 10001
                 </p>
               </div>
-            </div>
+            </div> */}
           </div>
 
           {/* Right - Contact Form */}
